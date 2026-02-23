@@ -133,10 +133,18 @@ function renderInterview() {
 
     allCardsSections.classList.add('hidden');
     filtered.classList.remove('hidden');
+
   if(interviewList.length ==0 ){
-    filtered.innerHTML= `<div>No date Available</div>`
+    filtered.innerHTML= `
+    <div class="text-center">
+                <img src ="./jobs.png" alt="" class="mx-auto">
+                <h3 class="text-2xl font-semibold text-blue-950 opacity-70">No jobs available</h3>
+                <p class="opacity-60">Check back soon for new job opportunities</p>
+            </div>
+    `
     return
   }
+
   filtered.innerHTML = ""
     for (let interview of interviewList) {
     console.log(interview);
@@ -175,8 +183,15 @@ function renderRejected() {
 
     allCardsSections.classList.add('hidden');
     filtered.classList.remove('hidden');
-    if(rejectedList.length ==0 ){
-    filtered.innerHTML= `<div>No date Available</div>`
+
+  if(rejectedList.length ==0 ){
+    filtered.innerHTML= `
+    <div class="text-center">
+                <img src ="./jobs.png" alt="" class="mx-auto">
+                <h3 class="text-2xl font-semibold text-blue-950 opacity-70">No jobs available</h3>
+                <p class="opacity-60">Check back soon for new job opportunities</p>
+            </div>
+    `
     return
   }
 
