@@ -158,11 +158,11 @@ function renderInterview() {
 
   if(interviewList.length ==0 ){
     filtered.innerHTML= `
-    <div class="text-center">
-                <img src ="./jobs.png" alt="" class="mx-auto">
-                <h3 class="text-2xl font-semibold text-blue-950 opacity-70">No jobs available</h3>
-                <p class="opacity-60">Check back soon for new job opportunities</p>
-            </div>
+    <div class="text-center h-[300px] w-10/12 mx-auto bg-amber-50 mt-10">
+            <img src ="./jobs.png" alt="" class="mx-auto w-min pt-24">
+            <h3 class="text-2xl font-semibold text-blue-950 opacity-70">No jobs available</h3>
+            <p class="opacity-60">Check back soon for new job opportunities</p>
+      </div>
     `
     return
   }
@@ -208,12 +208,12 @@ function renderRejected() {
 
   if(rejectedList.length ==0 ){
     filtered.innerHTML= `
-    <div class="text-center">
-                <img src ="./jobs.png" alt="" class="mx-auto">
-                <h3 class="text-2xl font-semibold text-blue-950 opacity-70">No jobs available</h3>
-                <p class="opacity-60">Check back soon for new job opportunities</p>
-            </div>
-    `
+    <div class="text-center h-[300px] w-10/12 mx-auto bg-amber-50 mt-10">
+            <img src ="./jobs.png" alt="" class="mx-auto w-min pt-24">
+            <h3 class="text-2xl font-semibold text-blue-950 opacity-70">No jobs available</h3>
+            <p class="opacity-60">Check back soon for new job opportunities</p>
+      </div>
+    ` 
     return
   }
 
