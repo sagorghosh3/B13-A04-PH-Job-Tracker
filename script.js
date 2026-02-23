@@ -44,17 +44,15 @@ function toggleStyle(id) {
   selected.classList.add('bg-blue-800', 'text-white')
 
   if (id === 'interview-primary-btn') {
-    allCardsSections.classList.add('hidden')
-    filtered.classList.remove('hidden')
-    renderInterview()
+    renderInterview();
+
   } else if (id === 'all-primary-btn') {
-    allCardsSections.classList.remove('hidden')
-    filtered.classList.add('hidden')
+    allCardsSections.classList.remove('hidden');
+    filtered.classList.add('hidden');
 
   } else if (id === 'rejected-primary-btn'){
-    allCardsSections.classList.add('hidden')
-    filtered.classList.remove('hidden')
-    renderRejected()
+    renderRejected();
+
   }
 }
 // event delegation
@@ -87,7 +85,9 @@ mainContainer.addEventListener('click', function (event) {
     }
     rejectedList = rejectedList.filter(item=> item.companyName != cardInfo.companyName)
 
-    renderInterview()
+    if(currentStatus === 'rejected-primary-btn'){
+      renderRejected()
+    }
     updateCount()
 
 
@@ -122,7 +122,6 @@ mainContainer.addEventListener('click', function (event) {
     if(currentStatus === 'interview-primary-btn'){
       renderInterview()
     }
-
     updateCount()
     // console.log(interviewList);
   }
@@ -131,8 +130,15 @@ mainContainer.addEventListener('click', function (event) {
 
 
 function renderInterview() {
+
+    allCardsSections.classList.add('hidden');
+    filtered.classList.remove('hidden');
+  if(interviewList.length ==0 ){
+    filtered.innerHTML= `<div>No date Available</div>`
+    return
+  }
   filtered.innerHTML = ""
-  for (let interview of interviewList) {
+    for (let interview of interviewList) {
     console.log(interview);
 
     let div = document.createElement('div');
@@ -166,6 +172,14 @@ function renderInterview() {
 }
 
 function renderRejected() {
+
+    allCardsSections.classList.add('hidden');
+    filtered.classList.remove('hidden');
+    if(rejectedList.length ==0 ){
+    filtered.innerHTML= `<div>No date Available</div>`
+    return
+  }
+
   filtered.innerHTML = ""
   for (let rejected of rejectedList) {
     let div = document.createElement('div');
