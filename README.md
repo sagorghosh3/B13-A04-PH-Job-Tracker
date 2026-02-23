@@ -25,7 +25,7 @@ Ans: (**) getElementById
 
 2. How do you create and insert a new element into the DOM?
 
-Ans:
+Ans: we can create element to use createElement syntax and insert new element through innerHTML = `content`.
 
 3. What is Event Bubbling? And how does it work?
 
@@ -33,8 +33,13 @@ Ans: When click the button, the event doesn’t just stay on the button. It trav
 
 4. What is Event Delegation in JavaScript? Why is it useful?
 
-Ans:
+Ans: Event delegation is a design pattern in JavaScript.
+it's useful for 
+Improved Performance,
+Readable code,
+Easy to handles dynamic content 
 
 5. What is the difference between preventDefault() and stopPropagation() methods?
 
-Ans:
+Ans: event.preventDefault() stops the browser's default action for a given event.
+     event.stopPropagation() stops the event from moving further up or down in DOM Tree.
