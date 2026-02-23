@@ -66,14 +66,14 @@ mainContainer.addEventListener('click', function (event) {
     const status = parentNode.querySelector('.status').innerText
     const notes = parentNode.querySelector('.notes').innerText
 
-    parentNode.querySelector('.status').innerText = 'interview'
+    parentNode.querySelector('.status').innerText = 'Interview'
     // console.log();
 
     const cardInfo = {
       companyName,
       designation,
       description,
-      status:'interview',
+      status:'Interview',
       notes,
     }
     // console.log(cardInfo)
@@ -125,6 +125,28 @@ mainContainer.addEventListener('click', function (event) {
     updateCount()
     // console.log(interviewList);
   }
+
+  //delete button add
+
+  else if (event.target.closest('.fa-trash-can')) {
+
+  const parentNode = event.target.closest('.card');
+  const companyName = parentNode.querySelector('.companyName').innerText;
+
+  interviewList = interviewList.filter(item => item.companyName != companyName);
+  rejectedList = rejectedList.filter(item => item.companyName != companyName);
+
+  if (currentStatus === 'interview-primary-btn') {
+    renderInterview();
+  }
+  else if (currentStatus === 'rejected-primary-btn') {
+    renderRejected();
+  }
+
+  updateCount();
+}
+
+
 
 })
 
