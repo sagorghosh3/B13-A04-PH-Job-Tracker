@@ -13,7 +13,7 @@ const filtered = document.getElementById('filter-section');
 // console.log(mainContainer);
 let interviewList = [];
 let rejectedList = [];
-let currentStatus ='all'
+let currentStatus = 'all'
 
 // interviewList.push()
 
@@ -23,6 +23,14 @@ function updateCount() {
   jobsCount.innerText = `${allCardsSections.children.length} jobs`;
   interviewCount.innerText = interviewList.length
   rejectedCount.innerText = rejectedList.length
+
+  if (currentStatus === 'interview-primary-btn') {
+    jobsCount.innerText = `${interviewList.length} jobs`;
+
+  } else if (currentStatus === 'rejected-primary-btn') {
+    jobsCount.innerText = `${rejectedList.length} jobs`;
+
+  } 
 }
 updateCount()
 
@@ -50,30 +58,31 @@ function toggleStyle(id) {
     allCardsSections.classList.remove('hidden');
     filtered.classList.add('hidden');
 
-  } else if (id === 'rejected-primary-btn'){
+  } else if (id === 'rejected-primary-btn') {
     renderRejected();
 
   }
+  updateCount()
 }
 // event delegation
 mainContainer.addEventListener('click', function (event) {
-  // console.log(event.target.classList.contains('interview-btn'))
   if (event.target.classList.contains('interview-btn')) {
     const parentNode = event.target.parentNode.parentNode;
     const companyName = parentNode.querySelector('.companyName').innerText
     const designation = parentNode.querySelector('.designation').innerText
     const description = parentNode.querySelector('.description').innerText
-    const status = parentNode.querySelector('.status').innerText
     const notes = parentNode.querySelector('.notes').innerText
-
-    parentNode.querySelector('.status').innerText = 'Interview'
-    // console.log();
+    const status = parentNode.querySelector('.status');
+    status.innerText = 'Interview';
+    status.classList.remove('bg-gray-200');
+    status.classList.add('font-semibold','border-2', 'bg-green-100', 'text-green-600');
+    status.classList.remove('bg-red-100', 'text-red-600');
 
     const cardInfo = {
       companyName,
       designation,
       description,
-      status:'Interview',
+      status: 'Interview',
       notes,
     }
     // console.log(cardInfo)
@@ -83,81 +92,76 @@ mainContainer.addEventListener('click', function (event) {
     if (!companyExist) {
       interviewList.push(cardInfo);
     }
-    rejectedList = rejectedList.filter(item=> item.companyName != cardInfo.companyName)
+    rejectedList = rejectedList.filter(item => item.companyName !== cardInfo.companyName)
 
-    if(currentStatus === 'rejected-primary-btn'){
+    if (currentStatus === 'rejected-primary-btn') {
       renderRejected()
     }
     updateCount()
 
-
-    // console.log(interviewList);
   } else if (event.target.classList.contains('rejected-btn')) {
     const parentNode = event.target.parentNode.parentNode;
     const companyName = parentNode.querySelector('.companyName').innerText
     const designation = parentNode.querySelector('.designation').innerText
     const description = parentNode.querySelector('.description').innerText
-    const status = parentNode.querySelector('.status').innerText
     const notes = parentNode.querySelector('.notes').innerText
-
-    parentNode.querySelector('.status').innerText = 'Rejected'
-    // console.log();
+    const status = parentNode.querySelector('.status');
+    status.innerText = 'Rejected';
+    status.classList.remove('bg-gray-200');
+    status.classList.add('bg-red-100', 'text-red-600');
 
     const cardInfo = {
       companyName,
       designation,
       description,
-      status:'Rejected',
+      status: 'Rejected',
       notes,
     }
-    // console.log(cardInfo)
 
     const companyExist = rejectedList.find(item => item.companyName === cardInfo.companyName);
 
     if (!companyExist) {
       rejectedList.push(cardInfo);
     }
-    interviewList = interviewList.filter(item=> item.companyName != cardInfo.companyName)
+    interviewList = interviewList.filter(item => item.companyName !== cardInfo.companyName)
 
-    if(currentStatus === 'interview-primary-btn'){
+    if (currentStatus === 'interview-primary-btn') {
       renderInterview()
     }
     updateCount()
-    // console.log(interviewList);
   }
 
-  //delete button add
+  //delete button (challenge part )
 
   else if (event.target.closest('.fa-trash-can')) {
 
-  const parentNode = event.target.closest('.card');
-  const companyName = parentNode.querySelector('.companyName').innerText;
+    const parentNode = event.target.closest('.card', '.all-cards');
+    const companyName = parentNode.querySelector('.companyName').innerText;
 
-  interviewList = interviewList.filter(item => item.companyName != companyName);
-  rejectedList = rejectedList.filter(item => item.companyName != companyName);
+    interviewList = interviewList.filter(item => item.companyName !== companyName);
+    rejectedList = rejectedList.filter(item => item.companyName !== companyName);
 
-  if (currentStatus === 'interview-primary-btn') {
-    renderInterview();
+    if (currentStatus === 'interview-primary-btn') {
+      renderInterview();
+    }
+    else if (currentStatus === 'rejected-primary-btn') {
+      renderRejected();
+    }
+
+    updateCount();
   }
-  else if (currentStatus === 'rejected-primary-btn') {
-    renderRejected();
-  }
-
-  updateCount();
-}
-
-
 
 })
 
 
 function renderInterview() {
 
-    allCardsSections.classList.add('hidden');
-    filtered.classList.remove('hidden');
+  allCardsSections.classList.add('hidden');
+  filtered.classList.remove('hidden');
 
-  if(interviewList.length ==0 ){
-    filtered.innerHTML= `
+
+  if (interviewList.length == 0) {
+    filtered.innerHTML = `
     <div class="text-center h-[300px] w-10/12 mx-auto bg-amber-50 mt-10">
             <img src ="./jobs.png" alt="" class="mx-auto w-min pt-24">
             <h3 class="text-2xl font-semibold text-blue-950 opacity-70">No jobs available</h3>
@@ -168,7 +172,7 @@ function renderInterview() {
   }
 
   filtered.innerHTML = ""
-    for (let interview of interviewList) {
+  for (let interview of interviewList) {
     console.log(interview);
 
     let div = document.createElement('div');
@@ -183,7 +187,7 @@ function renderInterview() {
               <p class="description  opacity-50">${interview.description}</p>
           </div>
           <!-- part 2 -->
-          <p class="status bg-gray-200 py-1 w-30 text-center rounded-sm">${interview.status}</p>
+          <p class="status font-semibold border-2 bg-green-100 text-green-600 py-1 w-30 text-center rounded-sm">${interview.status}</p>
           <p class="notes opacity-50">${interview.notes}</p>
           <div class="flex gap-5">
               <button class="interview-btn border-2 border-green-500 text-green-500 font-semibold px-4 py-2 rounded-md">Interview</button>
@@ -203,17 +207,17 @@ function renderInterview() {
 
 function renderRejected() {
 
-    allCardsSections.classList.add('hidden');
-    filtered.classList.remove('hidden');
+  allCardsSections.classList.add('hidden');
+  filtered.classList.remove('hidden');
 
-  if(rejectedList.length ==0 ){
-    filtered.innerHTML= `
+  if (rejectedList.length == 0) {
+    filtered.innerHTML = `
     <div class="text-center h-[300px] w-10/12 mx-auto bg-amber-50 mt-10">
             <img src ="./jobs.png" alt="" class="mx-auto w-min pt-24">
             <h3 class="text-2xl font-semibold text-blue-950 opacity-70">No jobs available</h3>
             <p class="opacity-60">Check back soon for new job opportunities</p>
       </div>
-    ` 
+    `
     return
   }
 
@@ -231,7 +235,7 @@ function renderRejected() {
               <p class="description  opacity-50">${rejected.description}</p>
           </div>
           <!-- part 2 -->
-          <p class="status bg-gray-200 py-1 w-30 text-center rounded-sm">${rejected.status}</p>
+          <p class="status font-semibold border-2 bg-red-100 text-red-600 py-1 w-30 text-center rounded-sm">${rejected.status}</p>
           <p class="notes opacity-50">${rejected.notes}</p>
           <div class="flex gap-5">
               <button class="interview-btn border-2 border-green-500 text-green-500 font-semibold px-4 py-2 rounded-md">Interview</button>
