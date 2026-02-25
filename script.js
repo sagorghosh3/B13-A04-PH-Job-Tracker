@@ -106,9 +106,12 @@ mainContainer.addEventListener('click', function (event) {
     const description = parentNode.querySelector('.description').innerText
     const notes = parentNode.querySelector('.notes').innerText
     const status = parentNode.querySelector('.status');
+    console.log(status)
     status.innerText = 'Rejected';
     status.classList.remove('bg-gray-200');
-    status.classList.add('bg-red-100', 'text-red-600');
+    status.classList.remove('border');
+    status.classList.add('font-semibold','border-2','bg-red-100', 'text-red-600');
+    console.log(status)
 
     const cardInfo = {
       companyName,
